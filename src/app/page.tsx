@@ -33,17 +33,16 @@ export default function Home() {
       });
 
       // TODO: Handle the response from the chat API to display the AI response in the UI
+      const data = await response.json();
+      console.log("data: ", data); // This log will be displayed in the browser console
 
-
-
-
+      setMessages(prev => [...prev, { role: "ai", content: data.message }]); // Take user message and use it to add a response with AI role and content from what was sent back from the API
     } catch (error) {
       console.error("Error:", error);
     } finally {
       setIsLoading(false);
     }
   };
-
 
   // TODO: Modify the color schemes, fonts, and UI as needed for a good user experience
   // Refer to the Tailwind CSS docs here: https://tailwindcss.com/docs/customizing-colors, and here: https://tailwindcss.com/docs/hover-focus-and-other-states
@@ -64,8 +63,8 @@ export default function Home() {
               key={index}
               className={`flex gap-4 mb-4 ${
                 msg.role === "ai"
-                  ? "justify-start"
-                  : "justify-end flex-row-reverse"
+                  ? "justify-start" // AI message is on the left
+                  : "justify-end flex-row-reverse" // User message is on the right
               }`}
             >
               <div
